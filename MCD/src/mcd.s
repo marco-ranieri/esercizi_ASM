@@ -20,11 +20,11 @@
 
 # 12 20
 .section .data
-    ask_num1: .ascii "Inserisci il primo numero\n"
-    ask_num1_len: .long . - ask_num_1
+    ask_num1: .ascii "Inserisci il primo numero:"
+    ask_num1_len: .long . - ask_num1
 
-    ask_num2: .ascii "Inserisci il secondo numero\n"
-    ask_num2_len: .long . - ask_num_2
+    ask_num2: .ascii "Inserisci il secondo numero:"
+    ask_num2_len: .long . - ask_num2
 
     num1_str: .ascii "000000"
     num1_str_len: .long . - num1_str
@@ -36,7 +36,7 @@
     num2: .long 0
 
 .section .text
-    .global _start
+.global _start
 
 _start:
 
@@ -145,5 +145,44 @@ fine_str_to_num2:
 
 # ----- CALCOLO IL MCD -------
 
+MCD:
+
+    movl num1, %eax
+    movl num2, %ebx
+
+    cmpl $0, %eax
+        jne else1
+    cmpl $0, %ebx
+        jne else1
+    movl $1, %ebx
+    jmp fine_mcd
+
+    else1:
+        cmpl $0, %ebx
+            jne else2
+        movl %eax, %ebx
+        jmp fine_mcd
+
+    else2:
+        cmpl $0, %eax
+            je fine_mcd
+
+        while:
+            cmpl %eax, %ebx
+                je fine_mcd
+            cmpl %ebx, %eax
+                jge else3
+            subl %eax, %ebx
+        jmp while
+
+    else3:
+        subl %ebx, %eax
+        jmp while
 
 
+fine_mcd:
+
+    movl %eax, %ecx
+    movl $1, %eax
+    xorl %ebx, %ebx
+    int $0x80

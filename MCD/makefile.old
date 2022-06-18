@@ -1,0 +1,14 @@
+EXE = mcd
+AS = as --32
+LD = ld -m elf_i386
+FLAGS = -gstabs
+OBJ = mcd.o
+
+$(EXE): $(OBJ)
+	$(LD) -o $(EXE) $(OBJ)
+
+mcd.o: mcd.s
+	$(AS) $(FLAGS) -o mcd.o mcd.s
+clean:
+	rm -f *.o $(EXE) core
+
