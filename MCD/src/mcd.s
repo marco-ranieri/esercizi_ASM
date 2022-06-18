@@ -147,42 +147,42 @@ fine_str_to_num2:
 
 MCD:
 
-    movl num1, %eax
-    movl num2, %ebx
+    movl num1, %eax             # copio il primo numero in eax
+    movl num2, %ebx             # copio il secondo numero in ebx
 
-    cmpl $0, %eax
-        jne else1
-    cmpl $0, %ebx
-        jne else1
-    movl $1, %ebx
-    jmp fine_mcd
+    cmpl $0, %eax               # confronto eax con zero
+        jne else1               # se è eax != da zero jump a else1
+    cmpl $0, %ebx               # altrimenti confronto ebx con zero
+        jne else1               # se ebx è != da zero jump a else1
+    movl $1, %ebx               # altrimenti metto il valore 1 in ebx
+    jmp fine_mcd                # e salto a fine programma
 
     else1:
-        cmpl $0, %ebx
-            jne else2
-        movl %eax, %ebx
-        jmp fine_mcd
+        cmpl $0, %ebx           # confronto ebx con zero
+            jne else2           # se ebx è != da zero salto a else2
+        movl %eax, %ebx         # altrimenti sposto eax in ebx
+        jmp fine_mcd            # e salto a fine programma
 
     else2:
-        cmpl $0, %eax
-            je fine_mcd
+        cmpl $0, %eax           # confronto eax con zero
+            je fine_mcd         # se eax è == a zero salto a fine programma
 
         while:
-            cmpl %eax, %ebx
-                je fine_mcd
-            cmpl %ebx, %eax
-                jge else3
-            subl %eax, %ebx
-        jmp while
+            cmpl %eax, %ebx     # se inece eax è diverso da zero (e anche ebx), confronto eax ed ebx
+                je fine_mcd     # se sono uguali salto a fine programma
+            cmpl %ebx, %eax     # altrimenti confronto ancora eax con ebx
+                jge else3       # se eax è >= a ebx, jump a else3
+            subl %eax, %ebx     # altrimenti, se eax è < di ebx, sottraggo ebx - eax e lo salvo in ebx
+        jmp while               # e ricomincio il while
 
     else3:
-        subl %ebx, %eax
-        jmp while
+        subl %ebx, %eax         # se eax era >= ad ebx, sottraggo eax - ebx e lo salvo in eax
+        jmp while               # e ricomincio il while
 
 
 fine_mcd:
 
-    movl %eax, %ecx
-    movl $1, %eax
-    xorl %ebx, %ebx
-    int $0x80
+    movl %eax, %ecx             # a fine programma, salvo eax (il MCD trovato) in ecx
+    movl $1, %eax               # -
+    xorl %ebx, %ebx             # -
+    int $0x80                   # system call EXIT
