@@ -2,18 +2,18 @@
 
 
 .section .data
-    num: .long 0
+    # num_temp: .long 0
 
 
 .section .text
-	.global atoi
+	.global str2num
 
-.type atoi, @function
+.type str2num, @function
 
 # CONVERTO STRINGA A NUMERO
-atoi:
+str2num:
 
-    leal input_1, %esi              # carico l'indirizzo della variabile input_1 in %esi
+    movl %eax, %esi              # carico l'indirizzo della variabile input_1 in %esi
 
     xorl %eax, %eax                 # resetto a zero tutti i registri primari
     xorl %ebx, %ebx
@@ -25,9 +25,9 @@ loop1:
     movb (%ecx, %esi, 1), %bl       # muovo ciò che sta all'indirizzo (%ecx + %esi*1), in %bl 
                                     # ( => al primo ciclo, la prima lettera della stringa)
                                     # (nei cicli successivi, man mano incremento %ecx di 1 quindi passo alle lettere successive)
-    cmp $10, %bl                    # verifico se il carattere "\n" è stato letto (ascii 10 = line feed LF)
+    cmp $0, %bl                    # verifico se il carattere "\n" è stato letto (ascii 10 = line feed LF)
 
-    je fine_atoi              # se sì, salta a fine loop
+    je fine_str2num                    # se sì, salta a fine loop
 
     subb $48, %bl                   # converte cifra da string a numero in ebx
 
@@ -39,6 +39,7 @@ loop1:
     jmp loop1                       # ricomincio il ciclo
 
 
-fine_atoi:
+fine_str2num:
 
-    movl %eax, num1                 # salvo il valore numerico trovato nella variabile num1
+    # movl %eax, num_temp             # salvo il valore numerico trovato nella variabile num_temp
+    ret
