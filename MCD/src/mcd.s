@@ -90,7 +90,7 @@ str_to_num1:
 
 loop1:
 
-    movb (%ecx, %esi, 1), %bl       # muovo ciò che sta all'indirizzo %ecx%esi*1, in %bl 
+    movb (%ecx, %esi, 1), %bl       # muovo ciò che sta all'indirizzo (%ecx + %esi*1), in %bl 
                                     # ( => al primo ciclo, la prima lettera della stringa)
                                     # (nei cicli successivi, man mano incremento %ecx di 1 quindi passo alle lettere successive)
     cmp $10, %bl                    # verifico se il carattere "\n" è stato letto (ascii 10 = line feed LF)
@@ -101,7 +101,7 @@ loop1:
 
     movl $10, %edx                  # mette il valore 10 in %edx
     mulb %dl                        # dl è 1 byte => moltiplica al per dl e mette il risultato in ax (al primo giro sarà zero)
-    addl %ebx, %eax                 # sommo ebx ad eax e lo salvo in eax, a disposizione per il prossimo giro (verrà moltipicato per 10 prima ceh gli venga sommato il nuovo ebx)
+    addl %ebx, %eax                 # sommo ebx ad eax e lo salvo in eax, a disposizione per il prossimo giro (verrà moltipicato per 10 prima che gli venga sommato il nuovo ebx)
 
     inc %ecx                        # incremento di 1 ecx per passare alla cifra successiva della stringa
     jmp loop1                       # ricomincio il ciclo
@@ -109,7 +109,7 @@ loop1:
 
 fine_str_to_num1:
 
-    movl %eax, num1             # salvo il valore numerico trovato nella variabile num1
+    movl %eax, num1                 # salvo il valore numerico trovato nella variabile num1
 
 
 # secondo numero
