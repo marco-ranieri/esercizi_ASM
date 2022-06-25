@@ -61,7 +61,7 @@ count_char:
     loop_count:
         movb (%ecx, %edx), %al          # metto il carattere della stringa in al
         testb %al, %al                  # verifico se è zero ("\0" = fine stringa)
-        jz end_count                    # se è zero salto alla fine della funzine count_char
+        jz end_count                    # se è zero salto alla fine della funzione count_char
         inc %edx                        # incremento edx per accedere alla lettera successiva al prossimo loop
         jmp loop_count                  # ricomincio il loop
 
